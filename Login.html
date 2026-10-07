@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Sophie</title>
+
+   <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #22174C;
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    background: #22174C;
+}
+
+.logo {
+    color: #f5c518;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 45px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #f5c518;
+}
+
+nav a.active {
+    color: #f5c518;
+}
+
+
+/* LOGIN SECTION */
+
+.login-section {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* LOGIN BOX */
+
+.login-box {
+    width: 400px;
+    padding: 40px;
+
+    background: white;
+    border-radius: 15px;
+}
+
+
+/* TITLE */
+
+.login-box h1 {
+    text-align: center;
+    color: #22174C;
+    margin-bottom: 10px;
+}
+
+.login-box > p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+
+/* FORM */
+
+label {
+    display: block;
+    color: #333;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    outline: none;
+}
+
+input:focus {
+    border-color: #22174C;
+}
+
+
+/* BUTTON */
+
+button {
+    width: 100%;
+    padding: 13px;
+
+    background: #f5c518;
+    color: #22174C;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e0b400;
+}
+
+
+/* SIGN UP */
+
+.signup-text {
+    margin-top: 20px;
+}
+
+.signup-text a {
+    color: #22174C;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+/* FIREBASE MESSAGE */
+
+#message {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+
+   </style>
+</head>
+
+<body>
+
+    
+    <header>
+
+        <div class="logo">Sophie</div>
+
+        <nav>
+            <a href="./index.html">Home</a>
+            <a href="./Abouts.html">About</a>
+            <a href="./service.html">Services</a>
+            <a href="./skills.html">Skills</a>
+            <a href="./education.html">Education</a>
+            <a href="./project.html">Projects</a>
+            <a href="./Blog.html">Blog</a>
+            <a href="./contacts.html">Contact</a>
+            <a href="./Login.html">Login</a>
+            
+        </nav>
+
+    </header>
+
+
+    <!-- LOGIN -->
+    <section class="login-section">
+
+        <div class="login-box">
+
+            <h1>Welcome Back</h1>
+
+            <p>Login to your account</p>
+
+            <form id="loginForm">
+
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit">LOGIN</button>
+
+            </form>
+
+            <p class="signup-text">
+                Don't have an account?
+                <a href="./sign up.html">Sign Up</a>
+            </p>
+
+            <p id="message"></p>
+
+        </div>
+
+    </section>
+
+
+    <script type="module" src="login.js">
+        
+// Firebase imports
+import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword
+} from
+    "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const loginForm = document.getElementById("loginForm");
+
+const message = document.getElementById("message");
+
+
+loginForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+
+    try {
+
+        const userCredential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        console.log("User logged in:", userCredential.user);
+
+        message.textContent = "Login successful!";
+
+        message.style.color = "green";
+
+
+        // Go to home page
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1000);
+
+
+    } catch (error) {
+
+        console.log(error);
+
+        message.textContent =
+            "Email or password is incorrect.";
+
+        message.style.color = "red";
+    }
+
+});
+
+
+    </script>
+
+</body>
+</html>
+```

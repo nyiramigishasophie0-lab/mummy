@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    
+
+        body {
+            
+            background: #22174C;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background: #22174C;
+            display: flex;
+            align-items: center;
+            padding: 25px 60px;
+        }
+
+        .logo {
+            margin: 75px;;
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            align-items:center;
+            justify-content: flex-end;
+            gap: 25px;
+            margin-left: 80px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin-right: 80px;
+        }
+
+        nav a:hover {
+            color: #FFD700;
+        }
+
+.blog {
+    background-color: #22174c;
+    padding: 80px 60px;
+    text-align: center;
+}
+
+.blog h2 {
+    color: white;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.blog h2 span {
+    color: yellow;
+}
+
+.blog-intro {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 45px;
+}
+
+.blog-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.blog-item {
+    width: 350px;
+    text-align: center;
+}
+
+.blog-card {
+    width: 350px;
+    height: 390px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.blog-image {
+    width: 100%;
+    height: 200px;
+}
+
+.blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blog-content {
+    padding: 25px;
+    text-align: left;
+}
+
+.blog-content h3 {
+    color: #22174c;
+    font-size: 23px;
+    margin: 0 0 15px;
+}
+
+.blog-content p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.blog-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 11px 25px;
+    background-color: yellow;
+    color: #22174c;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.blog-btn:hover {
+    background-color: white;
+}
+
+
+</style>
+<body>
+      <header>
+
+        <div class="logo">Sophie</div>
+
+        <nav>
+            <a href="./index.html">Home</a>
+            <a href="./Abouts.html">About</a>
+            <a href="./service.html">Services</a>
+            <a href="./skills.html">Skills</a>
+            <a href="./education.html">Education</a>
+            <a href="./project.html">Projects</a>
+            <a href="./Blog.html">Blog</a>
+            <a href="./contacts.html">Contact</a>
+            <a href="./Login.html">Login</a>
+            
+        </nav>
+
+    </header>
+</head>
+
+<section class="blog" id="blog">
+
+    <h2><span>My</span> Blog</h2>
+
+    <p class="blog-intro">
+        Welcome to my blog where I share my learning journey, technology,
+        and experiences.
+    </p>
+
+    <div class="blog-container">
+        <div class="blog-item">
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="./pexels-zayed-hossain-52728970-36706459.jpg" alt="My Coding Journey">
+                </div>
+
+                <div class="blog-content">
+                    <h3>My Coding Journey</h3>
+                    <p>
+                       My coding journey started with a simple
+                        interest in technology and a desire to 
+                        learn how websites and software are created.
+                         At first, coding was not easy for me, but I continued
+                        practicing and learning step by step.
+                    </p>
+                </div>
+            </div>
+
+            <a href="#" class="blog-btn">Read More</a>
+        </div>
+
+
+        <!-- Blog 2 -->
+        <div class="blog-item">
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="./pexels-dkomov-34803971.jpg" alt="Technology">
+                </div>
+
+                <div class="blog-content">
+                    <h3>Technology</h3>
+                    <p>
+                        Technology helps people solve problems,
+                         communicate, learn, and make work easier. 
+                         In web development, technology allows us to create
+                          modern websites and applications using tools
+                           such as HTML, CSS, JavaScript, GitHub
+                           and other programming technologies.
+
+                    </p>
+                </div>
+            </div>
+
+            <a href="#" class="blog-btn">Read More</a>
+        </div>
+
+
+        <!-- Blog 3 -->
+        <div class="blog-item">
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="./pexels-peaky-29445974.jpg" alt="Web Development">
+                </div>
+
+                <div class="blog-content">
+                    <h3>Web Development</h3>
+                    <p>A Web Developer is a person who create
+                         and maintains websites and web applications.
+                          They use technologies like HTML, CSS, and
+                           JavaScript to build websites that are attractive,
+                            responsive, and easy to use.
+
+                    </p>
+                </div>
+            </div>
+
+            <a href="#" class="blog-btn">Read More</a>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

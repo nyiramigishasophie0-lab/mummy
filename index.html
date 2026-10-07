@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophie Portfolio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            
+            background: #22174C;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background: #22174C;
+            display: flex;
+            align-items: center;
+            padding: 25px 60px;
+        }
+
+        .logo {
+            margin: 75px;
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            align-items:center;
+            justify-content: flex-end;
+            gap: 25px;
+            margin-left: 80px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin-right: 80px;
+        }
+
+        nav a:hover {
+            background-color: #FFD700;
+            border-radius: 5px;
+        }
+
+        .home {
+            background: #22174C;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 8%;
+            min-height: 70vh;
+        }
+
+        .home-text {
+            width: 55%;
+        }
+
+        .home-text h1 {
+            color: white;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .home-text h1 span {
+            color: hsl(45, 29%, 97%);
+            font-family: Arial, sans-serif;
+        }
+
+        .home-text p {
+            color: white;
+            line-height: 1.6;
+            width: 679px;
+            max-width: 100%;
+            font-size: 19px;
+            font-family: Arial, sans-serif;
+            margin-bottom: 25px;
+        }
+
+        .home-text button {
+            background: #FFD700;
+            color: #22174C;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .home-image {
+            width: 40%;
+            text-align: center;
+        }
+
+        .home-image img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">Sophie</div>
+
+        <nav>
+           <a href="./index.html">Home</a>
+            <a href="./Abouts.html">About</a>
+            <a href="./service.html">Services</a>
+            <a href="./skills.html">Skills</a>
+            <a href="./education.html">Education</a>
+            <a href="./project.html">Projects</a>
+            <a href="./Blog.html">Blog</a>
+            <a href="./contacts.html">Contact</a>
+            <a href="./Login.html">Login</a>
+            
+        </nav>
+
+    </header>
+
+    <section class="home" id="home">
+
+        <div class="home-text">
+
+            <h1>I'm <span>F</span></h1>
+
+            <p>
+                I’m a passionate Frontend Developer who enjoys creating
+                modern, responsive, and user-friendly websites.
+                I use HTML, CSS, JavaScript, Figma, and GitHub to turn
+                ideas into functional and attractive web experiences.
+                I’m always learning new technologies and improving my
+                skills by building real projects.
+            </p>
+
+            <button>Download</button>
+
+        </div>
+
+        <div class="home-image">
+            <img src="./sophie.pic-removebg-preview.png" alt="Sophie">
+        </div>
+
+    </section>
+
+</body>
+</html>

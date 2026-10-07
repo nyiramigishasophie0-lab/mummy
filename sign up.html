@@ -1,0 +1,349 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up - Sophie</title>
+
+    <style>
+        
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #22174C;
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    background: #22174C;
+}
+
+.logo {
+    color: #f5c518;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 45px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #f5c518;
+}
+
+nav a.active {
+    color: #f5c518;
+}
+
+
+/* SIGN UP SECTION */
+
+.signup-section {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* SIGN UP BOX */
+
+.signup-box {
+    width: 400px;
+    padding: 35px 40px;
+
+    background: white;
+    border-radius: 15px;
+}
+
+
+/* TITLE */
+
+.signup-box h1 {
+    text-align: center;
+    color: #22174C;
+    margin-bottom: 10px;
+}
+
+.signup-box > p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 22px;
+}
+
+
+/* FORM */
+
+label {
+    display: block;
+    color: #333;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 11px;
+
+    margin-bottom: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    outline: none;
+}
+
+input:focus {
+    border-color: #22174C;
+}
+
+
+/* BUTTON */
+
+button {
+    width: 100%;
+    padding: 13px;
+
+    background: #f5c518;
+    color: #22174C;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e0b400;
+}
+
+
+/* LOGIN */
+
+.login-text {
+    margin-top: 20px;
+}
+
+.login-text a {
+    color: #22174C;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+/* MESSAGE */
+
+#message {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    
+    <header>
+
+        <div class="logo">Sophie</div>
+
+        <nav>
+            <a href="index.html#home">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#Education">Education</a>
+            <a href="index.html#Projects">Projects</a>
+            <a href="index.html#Blog">Blog</a>
+            <a href="index.html#Contact">Contact</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html" class="active">Signup</a>
+        </nav>
+
+    </header>
+
+
+    <!-- SIGN UP -->
+    <section class="signup-section">
+
+        <div class="signup-box">
+
+            <h1>Create Account</h1>
+
+            <p>Sign up to get started</p>
+
+            <form id="signupForm">
+
+                <label>Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <label>Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
+                    required
+                >
+
+                <button type="submit">CREATE ACCOUNT</button>
+
+            </form>
+
+            <p class="login-text">
+                Already have an account?
+                <a href="./Login.html">Login</a>
+            </p>
+
+            <p id="message"></p>
+
+        </div>
+
+    </section>
+
+
+
+    <script type="module" src="signup.js">
+        import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword
+} from
+    "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDQ-_11c9AaW5-qwXHxwOl1vNuBe7V0RJc",
+    authDomain: "website-453a6.firebaseapp.com",
+    projectId: "website-453a6",
+    storageBucket: "website-453a6.firebasestorage.app",
+    messagingSenderId: "405430677930",
+    appId: "1:405430677930:web:4b5b65769aa280c4857bd3",
+    measurementId: "G-J5Z98YJTNL"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const signupForm = document.getElementById("signupForm");
+const message = document.getElementById("message");
+
+signupForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        message.textContent = "Passwords do not match.";
+        message.style.color = "red";
+        return;
+    }
+
+    try {
+
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        console.log("Account created:", userCredential.user);
+
+        message.textContent =
+            "Account created successfully!";
+
+        message.style.color = "green";
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
+
+    } catch (error) {
+
+        console.log(error);
+
+        if (error.code === "auth/email-already-in-use") {
+
+            message.textContent =
+                "This email is already registered.";
+
+        } else if (error.code === "auth/weak-password") {
+
+            message.textContent =
+                "Password must be at least 6 characters.";
+
+        } else {
+
+            message.textContent =
+                "Something went wrong. Try again.";
+        }
+
+        message.style.color = "red";
+    }
+});
+
+
+    </script>
+
+</body>
+
+</html>
+
