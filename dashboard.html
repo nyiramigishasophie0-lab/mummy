@@ -1,0 +1,1608 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophie  Dashboard</title>
+
+  <style>
+    :root {
+      --bg: #071d2b;
+      --panel: #0d293a;
+      --panel-2: #102f43;
+      --text: #f3f8fc;
+      --muted: #a8bac8;
+      --accent: #ff6500;
+      --blue: #0eb4f7;
+      --border: #254456;
+      --danger: #ff4d67;
+      --success: #24c78a;
+      --shadow: 0 12px 35px rgba(0, 0, 0, .2);
+    }
+
+    body.light {
+      --bg: #f1f5f9;
+      --panel: #ffffff;
+      --panel-2: #f7fafc;
+      --text: #142333;
+      --muted: #64748b;
+      --border: #dce5ed;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      transition: background .25s, color .25s;
+    }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 25px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .brand {
+      padding: 0 12px;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .brand .j { color: var(--accent); }
+    .brand .d { color: var(--blue); }
+    .brand .i { color: #01eefe; }
+
+    .sidebar-label {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      padding: 0 12px;
+      margin-bottom: 10px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .nav-button {
+      width: 100%;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      text-align: left;
+      border: 0;
+      padding: 13px 12px;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      transition: .2s;
+    }
+
+    .nav-button:hover,
+    .nav-button.active {
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    .nav-button.active {
+      border-left: 3px solid var(--accent);
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      display: grid;
+      gap: 10px;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 25px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: clamp(22px, 3vw, 30px);
+      margin-bottom: 7px;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-pill {
+      padding: 10px 13px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      max-width: 220px;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 16px;
+      font-weight: 700;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-small {
+      padding: 8px 11px;
+      font-size: 12px;
+    }
+
+    .section {
+      display: none;
+      animation: appear .25s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card,
+    .panel,
+    .content-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card {
+      padding: 22px;
+    }
+
+    .stat-card .stat-icon {
+      font-size: 25px;
+      margin-bottom: 15px;
+    }
+
+    .stat-card h3 {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .panel {
+      padding: 22px;
+      margin-bottom: 25px;
+    }
+
+    .panel h3 {
+      margin-bottom: 10px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .content-card {
+      overflow: hidden;
+      min-width: 0;
+      box-shadow: none;
+    }
+
+    .content-image {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      display: block;
+      background: var(--panel-2);
+    }
+
+    .content-image[hidden],
+    .image-placeholder[hidden],
+    .image-preview[hidden] {
+      display: none;
+    }
+
+    .image-placeholder {
+      height: 175px;
+      display: grid;
+      place-items: center;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 36px;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-body h3 {
+      font-size: 17px;
+      margin-bottom: 9px;
+      overflow-wrap: anywhere;
+    }
+
+    .card-description {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .card-link {
+      display: inline-block;
+      color: var(--blue);
+      margin-top: 12px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .field.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 12px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(14, 180, 247, .12);
+    }
+
+    .field input[type="file"] {
+      padding: 10px;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 125px;
+    }
+
+    .help-text {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-preview {
+      width: min(100%, 320px);
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .search-input {
+      width: min(100%, 300px);
+      padding: 11px 13px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      outline: none;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 35px 20px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .notice {
+      padding: 12px 15px;
+      border-radius: 9px;
+      margin-bottom: 18px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .notice.show { display: block; }
+    .notice.error { background: rgba(255, 77, 103, .12); color: var(--danger); }
+    .notice.success { background: rgba(36, 199, 138, .12); color: var(--success); }
+
+    .loading {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .footer {
+      padding: 20px 0 5px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1050px) {
+      .content-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .app { grid-template-columns: 1fr; }
+
+      .sidebar {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 260px;
+        transform: translateX(-105%);
+        transition: transform .25s;
+        box-shadow: var(--shadow);
+      }
+
+      .sidebar.open { transform: translateX(0); }
+
+      .main { padding: 18px; }
+
+      .mobile-menu { display: inline-flex; }
+
+      .topbar { align-items: flex-start; }
+      .top-actions { flex-wrap: wrap; justify-content: flex-end; }
+
+      .stats { grid-template-columns: 1fr; }
+      .content-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full-width { grid-column: auto; }
+
+      .user-pill { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">
+          Sophie Dashboard
+        </div>
+      </div>
+
+      <div>
+        <p class="sidebar-label">MAIN MENU</p>
+        <nav class="nav-list">
+          <button class="nav-button active" data-page="overview">🏠 Overview</button>
+          <button class="nav-button" data-page="projects">💼 Projects</button>
+          <button class="nav-button" data-page="blogs">📝 Blogs</button>
+          <button class="nav-button" data-page="add-project">➕ Add Project</button>
+          <button class="nav-button" data-page="add-blog">✍️ Add Blog</button>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="btn btn-secondary" id="themeToggle">🌙 Toggle theme</button>
+        <button class="btn btn-danger" id="logoutBtn">↪ Log out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <button class="btn btn-secondary mobile-menu" id="menuToggle" aria-label="Open menu">☰</button>
+          <h1 id="pageTitle">Welcome to your dashboard</h1>
+          <p class="muted" id="pageSubtitle">Manage your J.D.I portfolio content.</p>
+        </div>
+
+        <div class="top-actions">
+          <span class="user-pill" id="userEmail">Checking account...</span>
+        </div>
+      </header>
+
+      <div id="notice" class="notice" role="status" aria-live="polite"></div>
+
+      <!-- OVERVIEW -->
+      <section class="section active" id="overview">
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-icon">💼</div>
+            <h3 id="projectCount">0</h3>
+            <p>Total projects</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <h3 id="blogCount">0</h3>
+            <p>Total blog posts</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">🖼️</div>
+            <h3>IndexedDB</h3>
+            <p>Local image storage</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Welcome, Sophie! 👋</h3>
+          <p class="muted">
+            Use this dashboard to manage the projects and blog posts displayed
+            in your portfolio. Your text content is stored in Firestore, while
+            uploaded images stay in this browser.
+          </p>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <h2>Recent Projects</h2>
+            <p class="muted">Your latest portfolio projects.</p>
+          </div>
+          <button class="btn btn-primary" data-go="add-project">+ Add Project</button>
+        </div>
+        <div class="content-grid" id="recentProjects">
+          <div class="loading">Loading projects...</div>
+        </div>
+
+        <div class="section-heading" style="margin-top:30px">
+          <div>
+            <h2>Recent Blogs</h2>
+            <p class="muted">Your latest blog posts.</p>
+          </div>
+          <button class="btn btn-primary" data-go="add-blog">+ Add Blog</button>
+        </div>
+        <div class="content-grid" id="recentBlogs">
+          <div class="loading">Loading blogs...</div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="section" id="projects">
+        <div class="section-heading">
+          <div>
+            <h2>My Projects</h2>
+            <p class="muted">Create and manage your projects.</p>
+          </div>
+          <button class="btn btn-primary" data-go="add-project">+ Add Project</button>
+        </div>
+        <div class="content-grid" id="projectGrid">
+          <div class="loading">Loading projects...</div>
+        </div>
+      </section>
+
+      <!-- BLOGS -->
+      <section class="section" id="blogs">
+        <div class="section-heading">
+          <div>
+            <h2>My Blogs</h2>
+            <p class="muted">Create and manage your articles.</p>
+          </div>
+          <button class="btn btn-primary" data-go="add-blog">+ Add Blog</button>
+        </div>
+        <div class="content-grid" id="blogGrid">
+          <div class="loading">Loading blogs...</div>
+        </div>
+      </section>
+
+      <!-- PROJECT FORM -->
+      <section class="section" id="add-project">
+        <div class="section-heading">
+          <div>
+            <h2 id="projectFormTitle">Add New Project</h2>
+            <p class="muted">Choose an image from your device.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <form id="projectForm">
+            <input type="hidden" id="projectId">
+
+            <div class="form-grid">
+              <div class="field full-width">
+                <label for="projectTitle">Project Title *</label>
+                <input id="projectTitle" type="text" maxlength="150"
+                  placeholder="e.g Sophie Portfolio" required>
+              </div>
+
+              <div class="field full-width">
+                <label for="projectDescription">Description *</label>
+                <textarea id="projectDescription" maxlength="5000"
+                  placeholder="Describe your project..." required></textarea>
+              </div>
+
+              <div class="field full-width">
+                <label for="projectUrl">Project Link (optional)</label>
+                <input id="projectUrl" type="url"
+                  placeholder="https://example.com">
+                <small class="help-text">
+                  This is a website link, not an image link.
+                </small>
+              </div>
+
+              <div class="field full-width">
+                <label for="projectImage">Choose Project Image</label>
+                <input id="projectImage" type="file" accept="image/*">
+                <small class="help-text">
+                  Maximum 5 MB. Image is stored in this browser, not Firestore.
+                  Leave this empty when editing to keep the existing image.
+                </small>
+                <img id="projectImagePreview" class="image-preview"
+                  alt="Project image preview" hidden>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" id="projectSaveBtn" type="submit">
+                Save Project
+              </button>
+              <button class="btn btn-secondary" type="button" data-go="projects">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- BLOG FORM -->
+      <section class="section" id="add-blog">
+        <div class="section-heading">
+          <div>
+            <h2 id="blogFormTitle">Publish New Blog</h2>
+            <p class="muted">Write your article and select an image.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <form id="blogForm">
+            <input type="hidden" id="blogId">
+
+            <div class="form-grid">
+              <div class="field full-width">
+                <label for="blogTitle">Blog Title *</label>
+                <input id="blogTitle" type="text" maxlength="150"
+                  placeholder="e.g. My Web Development Journey" required>
+              </div>
+
+              <div class="field full-width">
+                <label for="blogDescription">Blog Content *</label>
+                <textarea id="blogDescription" maxlength="10000"
+                  placeholder="Write your blog post..." required></textarea>
+              </div>
+
+              <div class="field full-width">
+                <label for="blogImage">Choose Blog Image</label>
+                <input id="blogImage" type="file" accept="image/*">
+                <small class="help-text">
+                  Maximum 5 MB. Image stays in this browser only.
+                  Leave this empty when editing to keep the existing image.
+                </small>
+                <img id="blogImagePreview" class="image-preview"
+                  alt="Blog image preview" hidden>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" id="blogSaveBtn" type="submit">
+                Publish Post
+              </button>
+              <button class="btn btn-secondary" type="button" data-go="blogs">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <footer class="footer">
+        © <span id="year"></span> J.D.I — Sophie Dashboard
+      </footer>
+    </main>
+  </div>
+
+  <script type="module">
+    // =====================================================
+    // 1. FIREBASE IMPORTS
+    // =====================================================
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDocs,
+      setDoc,
+      updateDoc,
+      deleteDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+
+    // =====================================================
+    // 2. YOUR FIREBASE CONFIGURATION
+    // =====================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDo8Mx05x298OWpQaDUAjUvYR2Ye-ELcUs",
+      authDomain: "dashboard-35801.firebaseapp.com",
+      projectId: "dashboard-35801",
+      storageBucket: "dashboard-35801.firebasestorage.app",
+      messagingSenderId: "605136367808",
+      appId: "1:605136367808:web:fb1f5708c1ad8a3545bd25",
+      measurementId: "G-W2W8LZLQ68"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUser = null;
+    let projects = [];
+    let blogs = [];
+    let currentPage = "overview";
+
+    const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
+    // Image object URLs are temporary display URLs only.
+    // They are NOT saved to Firestore.
+    const imageObjectUrls = new Map();
+    const previewObjectUrls = new Map();
+
+    const pageInfo = {
+      overview: ["Welcome to your dashboard", "Manage your J.D.I portfolio content."],
+      projects: ["My Projects", "Manage your portfolio projects."],
+      blogs: ["My Blogs", "Manage your blog posts."],
+      "add-project": ["Add Project", "Create or edit a portfolio project."],
+      "add-blog": ["Add Blog", "Create or edit a blog post."]
+    };
+
+
+    // =====================================================
+    // 3. SMALL HELPER FUNCTIONS
+    // =====================================================
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function escapeHtml(value = "") {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[character]);
+    }
+
+    function showNotice(message, type = "success") {
+      const notice = byId("notice");
+      notice.textContent = message;
+      notice.className = `notice show ${type}`;
+
+      window.clearTimeout(showNotice.timer);
+      showNotice.timer = window.setTimeout(() => {
+        notice.className = "notice";
+      }, 5000);
+    }
+
+    function getContentCollection(type) {
+      if (!currentUser) throw new Error("You must sign in first.");
+
+      return collection(db, "users", currentUser.uid, type);
+    }
+
+    function getContentDocument(type, id) {
+      if (!currentUser) throw new Error("You must sign in first.");
+
+      return doc(db, "users", currentUser.uid, type, id);
+    }
+
+    function imageStorageKey(type, id) {
+      if (!currentUser) throw new Error("You must sign in first.");
+
+      return `${currentUser.uid}:${type}:${id}`;
+    }
+
+    function validateOptionalUrl(value) {
+      if (!value.trim()) return "";
+
+      const parsed = new URL(value);
+
+      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+        throw new Error("Project link must begin with http:// or https://.");
+      }
+
+      return parsed.href;
+    }
+
+
+    // =====================================================
+    // 4. INDEXEDDB: STORE IMAGE FILES IN THIS BROWSER
+    // =====================================================
+    function openImageDB() {
+      return new Promise((resolve, reject) => {
+        if (!("indexedDB" in window)) {
+          reject(new Error("This browser does not support IndexedDB."));
+          return;
+        }
+
+        const request = indexedDB.open("SophieDashboardImages", 1);
+
+        request.onupgradeneeded = () => {
+          const database = request.result;
+
+          if (!database.objectStoreNames.contains("images")) {
+            database.createObjectStore("images", { keyPath: "key" });
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(
+          request.error || new Error("Could not open local image database.")
+        );
+      });
+    }
+
+    async function getStoredImage(key) {
+      const database = await openImageDB();
+
+      try {
+        return await new Promise((resolve, reject) => {
+          const transaction = database.transaction("images", "readonly");
+          const request = transaction.objectStore("images").get(key);
+
+          request.onsuccess = () => resolve(request.result || null);
+          request.onerror = () => reject(request.error);
+        });
+      } finally {
+        database.close();
+      }
+    }
+
+    async function putStoredImage(key, file) {
+      const database = await openImageDB();
+
+      try {
+        return await new Promise((resolve, reject) => {
+          const transaction = database.transaction("images", "readwrite");
+
+          transaction.objectStore("images").put({
+            key,
+            blob: file,
+            mimeType: file.type,
+            updatedAt: Date.now()
+          });
+
+          transaction.oncomplete = () => resolve();
+          transaction.onerror = () => reject(transaction.error);
+          transaction.onabort = () => reject(
+            transaction.error || new Error("Image storage was cancelled.")
+          );
+        });
+      } finally {
+        database.close();
+      }
+    }
+
+    async function removeStoredImage(key) {
+      const database = await openImageDB();
+
+      try {
+        return await new Promise((resolve, reject) => {
+          const transaction = database.transaction("images", "readwrite");
+          transaction.objectStore("images").delete(key);
+
+          transaction.oncomplete = () => resolve();
+          transaction.onerror = () => reject(transaction.error);
+          transaction.onabort = () => reject(
+            transaction.error || new Error("Image removal was cancelled.")
+          );
+        });
+      } finally {
+        database.close();
+      }
+    }
+
+    function revokeCachedImageUrl(key) {
+      const url = imageObjectUrls.get(key);
+
+      if (url) {
+        URL.revokeObjectURL(url);
+        imageObjectUrls.delete(key);
+      }
+    }
+
+    function clearPreview(previewId) {
+      const oldUrl = previewObjectUrls.get(previewId);
+
+      if (oldUrl) {
+        URL.revokeObjectURL(oldUrl);
+        previewObjectUrls.delete(previewId);
+      }
+
+      const image = byId(previewId);
+      image.removeAttribute("src");
+      image.hidden = true;
+    }
+
+    function showPreviewBlob(previewId, blob) {
+      clearPreview(previewId);
+
+      const url = URL.createObjectURL(blob);
+      previewObjectUrls.set(previewId, url);
+
+      const image = byId(previewId);
+      image.src = url;
+      image.hidden = false;
+    }
+
+    function previewSelectedFile(inputId, previewId) {
+      const input = byId(inputId);
+      const file = input.files?.[0];
+
+      if (!file) {
+        clearPreview(previewId);
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        input.value = "";
+        clearPreview(previewId);
+        showNotice("Please choose an image file.", "error");
+        return;
+      }
+
+      if (file.size > MAX_IMAGE_SIZE) {
+        input.value = "";
+        clearPreview(previewId);
+        showNotice("Image is too large. Choose an image under 5 MB.", "error");
+        return;
+      }
+
+      showPreviewBlob(previewId, file);
+    }
+
+    byId("projectImage").addEventListener("change", () => {
+      previewSelectedFile("projectImage", "projectImagePreview");
+    });
+
+    byId("blogImage").addEventListener("change", () => {
+      previewSelectedFile("blogImage", "blogImagePreview");
+    });
+
+
+    // =====================================================
+    // 5. IMAGE MARKUP AND IMAGE DISPLAY
+    // =====================================================
+    function getImageMarkup(item, type) {
+      const key = imageStorageKey(type, item.id);
+
+      return `
+        <img
+          class="content-image"
+          data-image-key="${escapeHtml(key)}"
+          alt="${escapeHtml(item.title || "Content image")}"
+          loading="lazy"
+          hidden
+        >
+        <div class="image-placeholder">🖼️</div>
+      `;
+    }
+
+    async function hydrateImages(container) {
+      if (!container) return;
+
+      const images = container.querySelectorAll("img[data-image-key]");
+
+      for (const image of images) {
+        const key = image.dataset.imageKey;
+        const placeholder = image.nextElementSibling;
+
+        try {
+          const record = await getStoredImage(key);
+
+          if (!record?.blob) {
+            image.hidden = true;
+            if (placeholder) placeholder.hidden = false;
+            continue;
+          }
+
+          let objectUrl = imageObjectUrls.get(key);
+
+          if (!objectUrl) {
+            objectUrl = URL.createObjectURL(record.blob);
+            imageObjectUrls.set(key, objectUrl);
+          }
+
+          image.src = objectUrl;
+          image.hidden = false;
+
+          if (placeholder) placeholder.hidden = true;
+
+          image.onerror = () => {
+            image.hidden = true;
+            if (placeholder) placeholder.hidden = false;
+          };
+        } catch (error) {
+          console.error("Could not load local image:", error);
+          image.hidden = true;
+          if (placeholder) placeholder.hidden = false;
+        }
+      }
+    }
+
+
+    // =====================================================
+    // 6. NAVIGATION
+    // =====================================================
+    function showPage(page) {
+      if (!pageInfo[page]) page = "overview";
+
+      currentPage = page;
+
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.toggle("active", section.id === page);
+      });
+
+      document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.toggle("active", button.dataset.page === page);
+      });
+
+      byId("pageTitle").textContent = pageInfo[page][0];
+      byId("pageSubtitle").textContent = pageInfo[page][1];
+
+      byId("sidebar").classList.remove("open");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".nav-button").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.page));
+    });
+
+    document.querySelectorAll("[data-go]").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.go));
+    });
+
+    byId("menuToggle").addEventListener("click", () => {
+      byId("sidebar").classList.toggle("open");
+    });
+
+    byId("themeToggle").addEventListener("click", () => {
+      document.body.classList.toggle("light");
+
+      try {
+        localStorage.setItem(
+          "sophieDashboardTheme",
+          document.body.classList.contains("light") ? "light" : "dark"
+        );
+      } catch (error) {
+        console.warn("Could not save theme preference.", error);
+      }
+    });
+
+    try {
+      if (localStorage.getItem("sophieDashboardTheme") === "light") {
+        document.body.classList.add("light");
+      }
+    } catch (error) {
+      console.warn("Could not read theme preference.", error);
+    }
+
+
+    // =====================================================
+    // 7. RENDER PROJECTS AND BLOGS
+    // =====================================================
+    function createContentCard(item, type) {
+      const title = escapeHtml(item.title || "Untitled");
+      const description = escapeHtml(item.description || "");
+      const isProject = type === "projects";
+
+      let safeProjectLink = "";
+
+      if (isProject && item.projectUrl) {
+        try {
+          safeProjectLink = validateOptionalUrl(item.projectUrl);
+        } catch {
+          safeProjectLink = "";
+        }
+      }
+
+      return `
+        <article class="content-card">
+          ${getImageMarkup(item, type)}
+
+          <div class="card-body">
+            <h3>${title}</h3>
+
+            <p class="card-description">${description}</p>
+
+            ${
+              safeProjectLink
+                ? `<a class="card-link"
+                     href="${escapeHtml(safeProjectLink)}"
+                     target="_blank"
+                     rel="noopener noreferrer">Open project ↗</a>`
+                : ""
+            }
+
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small"
+                data-action="edit"
+                data-type="${type}"
+                data-id="${escapeHtml(item.id)}">Edit</button>
+
+              <button class="btn btn-danger btn-small"
+                data-action="delete"
+                data-type="${type}"
+                data-id="${escapeHtml(item.id)}">Delete</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderContent(type) {
+      const items = type === "projects" ? projects : blogs;
+      const grid = byId(type === "projects" ? "projectGrid" : "blogGrid");
+
+      if (!items.length) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p>No ${type} found yet.</p>
+            <p>Use the button above to add your first ${type === "projects" ? "project" : "blog"}.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = items.map(item => createContentCard(item, type)).join("");
+      hydrateImages(grid);
+    }
+
+    function renderHome() {
+      byId("projectCount").textContent = projects.length;
+      byId("blogCount").textContent = blogs.length;
+
+      const recentProjects = byId("recentProjects");
+      const recentBlogs = byId("recentBlogs");
+
+      recentProjects.innerHTML = projects.length
+        ? projects.slice(0, 3).map(item => createContentCard(item, "projects")).join("")
+        : `<div class="empty-state">No projects yet. Add your first project.</div>`;
+
+      recentBlogs.innerHTML = blogs.length
+        ? blogs.slice(0, 3).map(item => createContentCard(item, "blogs")).join("")
+        : `<div class="empty-state">No blogs yet. Add your first blog post.</div>`;
+
+      hydrateImages(recentProjects);
+      hydrateImages(recentBlogs);
+    }
+
+    async function loadAllContent() {
+      if (!currentUser) return;
+
+      byId("projectGrid").innerHTML = '<div class="loading">Loading projects...</div>';
+      byId("blogGrid").innerHTML = '<div class="loading">Loading blogs...</div>';
+
+      try {
+        const [projectSnapshot, blogSnapshot] = await Promise.all([
+          getDocs(getContentCollection("projects")),
+          getDocs(getContentCollection("blogs"))
+        ]);
+
+        projects = projectSnapshot.docs.map(document => ({
+          id: document.id,
+          ...document.data()
+        }));
+
+        blogs = blogSnapshot.docs.map(document => ({
+          id: document.id,
+          ...document.data()
+        }));
+
+        renderContent("projects");
+        renderContent("blogs");
+        renderHome();
+      } catch (error) {
+        console.error("Content loading failed:", error);
+
+        byId("projectGrid").innerHTML =
+          '<div class="empty-state">Could not load projects. Check your connection and Firestore rules.</div>';
+
+        byId("blogGrid").innerHTML =
+          '<div class="empty-state">Could not load blogs. Check your connection and Firestore rules.</div>';
+
+        showNotice("Could not load dashboard content: " + error.message, "error");
+      }
+    }
+
+
+    // =====================================================
+    // 8. SAVE PROJECTS AND BLOGS
+    // =====================================================
+    async function saveContent(type, event) {
+      event.preventDefault();
+
+      if (!currentUser) {
+        showNotice("Please sign in first.", "error");
+        return;
+      }
+
+      const isProject = type === "projects";
+
+      const idInput = byId(isProject ? "projectId" : "blogId");
+      const titleInput = byId(isProject ? "projectTitle" : "blogTitle");
+      const descriptionInput = byId(
+        isProject ? "projectDescription" : "blogDescription"
+      );
+      const imageInput = byId(isProject ? "projectImage" : "blogImage");
+      const previewId = isProject ? "projectImagePreview" : "blogImagePreview";
+      const saveButton = byId(isProject ? "projectSaveBtn" : "blogSaveBtn");
+      const urlInput = isProject ? byId("projectUrl") : null;
+
+      const id = idInput.value.trim();
+      const title = titleInput.value.trim();
+      const description = descriptionInput.value.trim();
+      const file = imageInput.files?.[0] || null;
+
+      if (!title || !description) {
+        showNotice("Please complete the title and description.", "error");
+        return;
+      }
+
+      if (file && !file.type.startsWith("image/")) {
+        showNotice("Please choose a valid image file.", "error");
+        return;
+      }
+
+      if (file && file.size > MAX_IMAGE_SIZE) {
+        showNotice("Image is too large. Choose an image under 5 MB.", "error");
+        return;
+      }
+
+      let projectUrl = "";
+
+      try {
+        if (isProject) {
+          projectUrl = validateOptionalUrl(urlInput.value.trim());
+        }
+      } catch (error) {
+        showNotice(error.message, "error");
+        return;
+      }
+
+      const originalButtonText = isProject
+        ? (id ? "Update Project" : "Save Project")
+        : (id ? "Update Blog" : "Publish Post");
+
+      saveButton.disabled = true;
+      saveButton.textContent = "Saving...";
+
+      let key = "";
+      let previousImage = null;
+      let imageWasChanged = false;
+      let isNewDocument = false;
+
+      try {
+        let contentRef;
+
+        if (id) {
+          contentRef = getContentDocument(type, id);
+          key = imageStorageKey(type, id);
+        } else {
+          contentRef = doc(getContentCollection(type));
+          key = imageStorageKey(type, contentRef.id);
+          isNewDocument = true;
+        }
+
+        // Keep a copy of the previous image so we can restore it if
+        // the Firestore write fails after replacing an image.
+        if (file && !isNewDocument) {
+          previousImage = await getStoredImage(key);
+        }
+
+        // Store the image Blob in IndexedDB, not Firestore.
+        if (file) {
+          await putStoredImage(key, file);
+          imageWasChanged = true;
+        }
+
+        // IMPORTANT: no imageUrl, image URL, or image Blob in this object.
+        const contentData = {
+          title,
+          description,
+          updatedAt: serverTimestamp()
+        };
+
+        if (isProject) {
+          contentData.projectUrl = projectUrl;
+        }
+
+        if (isNewDocument) {
+          contentData.createdAt = serverTimestamp();
+          await setDoc(contentRef, contentData);
+        } else {
+          await updateDoc(contentRef, contentData);
+        }
+
+        if (imageWasChanged) {
+          revokeCachedImageUrl(key);
+        }
+
+        resetEditor(type);
+        await loadAllContent();
+
+        showNotice(
+          isProject
+            ? (id ? "Project updated successfully!" : "Project saved successfully!")
+            : (id ? "Blog updated successfully!" : "Blog published successfully!")
+        );
+
+        showPage(isProject ? "projects" : "blogs");
+
+      } catch (error) {
+        console.error("Saving content failed:", error);
+
+        // If saving failed, restore the previous local image when possible.
+        if (imageWasChanged && key) {
+          try {
+            if (isNewDocument || !previousImage) {
+              await removeStoredImage(key);
+            } else {
+              await putStoredImage(key, previousImage.blob);
+            }
+
+            revokeCachedImageUrl(key);
+          } catch (restoreError) {
+            console.error("Could not restore local image:", restoreError);
+          }
+        }
+
+        showNotice(
+          "Could not save content. Check your internet connection and Firestore rules. " +
+          error.message,
+          "error"
+        );
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = originalButtonText;
+      }
+    }
+
+    byId("projectForm").addEventListener("submit", event => {
+      saveContent("projects", event);
+    });
+
+    byId("blogForm").addEventListener("submit", event => {
+      saveContent("blogs", event);
+    });
+
+
+    // =====================================================
+    // 9. EDIT CONTENT
+    // =====================================================
+    async function editContent(type, id) {
+      const items = type === "projects" ? projects : blogs;
+      const item = items.find(entry => entry.id === id);
+
+      if (!item) {
+        showNotice("Content was not found. Refresh and try again.", "error");
+        return;
+      }
+
+      const isProject = type === "projects";
+      const inputId = isProject ? "projectImage" : "blogImage";
+      const previewId = isProject ? "projectImagePreview" : "blogImagePreview";
+
+      byId(isProject ? "projectId" : "blogId").value = item.id;
+      byId(isProject ? "projectTitle" : "blogTitle").value = item.title || "";
+      byId(isProject ? "projectDescription" : "blogDescription").value =
+        item.description || "";
+
+      if (isProject) {
+        byId("projectUrl").value = item.projectUrl || "";
+      }
+
+      // Browsers do not allow us to populate a file input programmatically.
+      // The user may choose a replacement image, or leave it empty.
+      byId(inputId).value = "";
+      clearPreview(previewId);
+
+      try {
+        const key = imageStorageKey(type, item.id);
+        const record = await getStoredImage(key);
+
+        if (record?.blob) {
+          showPreviewBlob(previewId, record.blob);
+        }
+      } catch (error) {
+        console.error("Could not load image for editing:", error);
+        showNotice("Could not load the saved local image.", "error");
+      }
+
+      if (isProject) {
+        byId("projectFormTitle").textContent = "Edit Project";
+        byId("projectSaveBtn").textContent = "Update Project";
+        showPage("add-project");
+      } else {
+        byId("blogFormTitle").textContent = "Edit Blog";
+        byId("blogSaveBtn").textContent = "Update Blog";
+        showPage("add-blog");
+      }
+    }
+
+
+    // =====================================================
+    // 10. DELETE CONTENT AND ITS LOCAL IMAGE
+    // =====================================================
+    async function deleteContent(type, id) {
+      const isProject = type === "projects";
+      const label = isProject ? "project" : "blog post";
+
+      if (!confirm(`Are you sure you want to delete this ${label}?`)) {
+        return;
+      }
+
+      try {
+        // Delete text/metadata from Firestore.
+        await deleteDoc(getContentDocument(type, id));
+
+        // Delete the image Blob from IndexedDB.
+        const key = imageStorageKey(type, id);
+
+        try {
+          await removeStoredImage(key);
+        } catch (imageError) {
+          console.error("Local image cleanup failed:", imageError);
+          showNotice(
+            "Content deleted, but the local image could not be removed. " +
+            imageError.message,
+            "error"
+          );
+        }
+
+        revokeCachedImageUrl(key);
+
+        await loadAllContent();
+        showNotice(`${isProject ? "Project" : "Blog post"} deleted.`);
+      } catch (error) {
+        console.error("Deleting content failed:", error);
+        showNotice("Could not delete content: " + error.message, "error");
+      }
+    }
+
+
+    // =====================================================
+    // 11. EDIT / DELETE BUTTON EVENTS
+    // =====================================================
+    document.addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
+
+      if (!button) return;
+
+      const action = button.dataset.action;
+      const type = button.dataset.type;
+      const id = button.dataset.id;
+
+      if (!["projects", "blogs"].includes(type) || !id) return;
+
+      if (action === "edit") {
+        editContent(type, id);
+      }
+
+      if (action === "delete") {
+        deleteContent(type, id);
+      }
+    });
+
+
+    // =====================================================
+    // 12. RESET FORMS
+    // =====================================================
+    function resetEditor(type) {
+      const isProject = type === "projects";
+      const form = byId(isProject ? "projectForm" : "blogForm");
+      const previewId = isProject ? "projectImagePreview" : "blogImagePreview";
+
+      form.reset();
+      byId(isProject ? "projectId" : "blogId").value = "";
+      clearPreview(previewId);
+
+      if (isProject) {
+        byId("projectFormTitle").textContent = "Add New Project";
+        byId("projectSaveBtn").textContent = "Save Project";
+      } else {
+        byId("blogFormTitle").textContent = "Publish New Blog";
+        byId("blogSaveBtn").textContent = "Publish Post";
+      }
+    }
+
+    byId("projectForm").addEventListener("reset", () => {
+      clearPreview("projectImagePreview");
+    });
+
+    byId("blogForm").addEventListener("reset", () => {
+      clearPreview("blogImagePreview");
+    });
+
+
+    // =====================================================
+    // 13. LOG OUT
+    // =====================================================
+    byId("logoutBtn").addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "./Login.html";
+      } catch (error) {
+        console.error("Sign out failed:", error);
+        showNotice("Could not log out: " + error.message, "error");
+      }
+    });
+
+
+    // =====================================================
+    // 14. AUTHENTICATION GUARD
+    // =====================================================
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        window.location.href = "./Login.html";
+        return;
+      }
+
+      currentUser = user;
+      byId("userEmail").textContent = user.email || "Signed in";
+      await loadAllContent();
+    });
+
+
+    // =====================================================
+    // 15. FOOTER YEAR
+    // =====================================================
+    byId("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

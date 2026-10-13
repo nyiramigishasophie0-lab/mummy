@@ -7,57 +7,75 @@
     <title>Services</title>
 
     <style>
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-       body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #22174c;
-}
+        :root {
+            --primary: #22174C;
+            --secondary: #f5c518;
+            --white: #ffffff;
+            --text: #333333;
+            --muted: #777777;
+            --border: #dddddd;
+        }
 
-    header {
-    background-color: #22174c;
-
-    padding: 20px 50px;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-}
-
-    header h2 {
-    color: #ffffff;
-
-    margin: 0;
-}
-
-
-  nav {
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--primary);
+            min-height: 100vh;
             display: flex;
-            align-items:center;
-            justify-content: flex-end;
-            gap: 25px;
-            margin-left: 80px;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: var(--primary);
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 30px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         nav a {
-            color: white;
+            color: var(--white);
             text-decoration: none;
-            font-size: 16px;
-            margin-right: 80px;
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
         }
- .logo {
-            margin: 75px;;
-            color: white;
-            font-size: 25px;
-            font-weight: bold;
-        }
-        
 
-        nav a:hover {
-            color: yellow;
+        nav a:hover,
+        nav a.active {
+            background: var(--secondary);
+            color: var(--primary);
         }
+
 
 
 
@@ -194,7 +212,6 @@
 
                 </div>
 
-                <button>Read More</button>
 
             </div>
 
@@ -215,7 +232,7 @@
 
                 </div>
 
-                <button>Read More</button>
+                
 
             </div>
 
@@ -237,7 +254,7 @@
 
                 </div>
 
-                <button>Read More</button>
+            
 
             </div>
 

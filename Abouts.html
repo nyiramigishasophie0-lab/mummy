@@ -5,45 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-
-        body {
-            
-            background: #22174C;
-            font-family: Arial, sans-serif;
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        header {
-            background: #22174C;
+        :root {
+            --primary: #22174C;
+            --secondary: #f5c518;
+            --white: #ffffff;
+            --text: #333333;
+            --muted: #777777;
+            --border: #dddddd;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--primary);
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 25px 60px;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: var(--primary);
         }
 
         .logo {
-            margin: 75px;;
-            color: white;
-            font-size: 25px;
+            color: var(--white);
+            font-size: 30px;
             font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
         }
 
         nav {
             display: flex;
-            align-items:center;
-            justify-content: flex-end;
-            gap: 25px;
-            margin-left: 80px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         nav a {
-            color: white;
+            color: var(--white);
             text-decoration: none;
-            font-size: 16px;
-            margin-right: 80px;
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
         }
 
-        nav a:hover {
-            color: #FFD700;
+        nav a:hover,
+        nav a.active {
+            background: var(--secondary);
+            color: var(--primary);
         }
+
 .about {
     background: #22174C;
     display: flex;
@@ -122,7 +152,7 @@ I’m Sophie, a passionate Frontend Developer who enjoys creating responsive, us
 
         </p>
 
-        <button>Read More</button>
+
     </div>
 
 </section>
