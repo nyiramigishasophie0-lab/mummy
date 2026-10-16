@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login - Sophie</title>
 
     <style>
-        /* RESET */
         * {
             margin: 0;
             padding: 0;
@@ -32,7 +30,6 @@
             flex-direction: column;
         }
 
-        /* HEADER */
         header {
             width: 100%;
             padding: 20px 5%;
@@ -78,7 +75,6 @@
             color: var(--primary);
         }
 
-        /* LOGIN SECTION */
         .login-section {
             flex: 1;
             display: flex;
@@ -98,20 +94,20 @@
         }
 
         .login-icon {
-            width: 65px;
-            height: 65px;
+            width: 100px;
+            height: 100px;
             margin: 0 auto 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             background: #f1edff;
             border-radius: 50%;
-            font-size: 28px;
+            overflow: hidden;
         }
-        img{
-            width: 100px;
-            height: 100px;
-            border-radius: 50px ;
+
+        .login-icon img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
@@ -128,7 +124,6 @@
             font-size: 14px;
         }
 
-        /* FORM */
         .form-group {
             margin-bottom: 20px;
         }
@@ -177,7 +172,6 @@
             padding: 5px;
         }
 
-        /* LOGIN BUTTON */
         .login-button {
             width: 100%;
             padding: 14px;
@@ -202,7 +196,6 @@
             transform: none;
         }
 
-        /* MESSAGES */
         #message {
             margin-top: 15px;
             text-align: center;
@@ -241,7 +234,6 @@
             font-size: 14px;
         }
 
-        /* FOOTER */
         footer {
             text-align: center;
             padding: 20px;
@@ -254,14 +246,12 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* RESPONSIVE DESIGN */
         @media (max-width: 900px) {
             header {
                 justify-content: center;
@@ -295,9 +285,8 @@
 
 <body>
 
-    <!-- HEADER -->
     <header>
-        <a href="./index.html" class="logo">Sophie<span>.</span></a>
+        <a href="./index.html" class="logo">Sophie</a>
 
         <nav>
             <a href="./index.html">Home</a>
@@ -308,15 +297,17 @@
             <a href="./project.html">Projects</a>
             <a href="./Blog.html">Blog</a>
             <a href="./contacts.html">Contact</a>
-            <a href="./Login.html" >Login</a>
+            <a href="./Login.html" class="active">Login</a>
         </nav>
     </header>
 
-    <!-- LOGIN -->
     <main class="login-section">
         <div class="login-box">
 
-            <div class="login-icon"><img src="./sophie.pic-removebg-preview.png" alt=""></div>
+            <div class="login-icon">
+                <img src="./sophie.pic-removebg-preview.png"
+                     alt="Sophie">
+            </div>
 
             <h1>Welcome Back!</h1>
             <p class="subtitle">Login to your Sophie account</p>
@@ -325,14 +316,12 @@
 
                 <div class="form-group">
                     <label for="email">Email Address</label>
-
                     <input
                         type="email"
                         id="email"
                         placeholder="Enter your email"
-                        autocomplete="email"
-                        required
-                    >
+                        autocomplete="username"
+                        required>
                 </div>
 
                 <div class="form-group">
@@ -344,27 +333,25 @@
                             id="password"
                             placeholder="Enter your password"
                             autocomplete="current-password"
-                            required
-                        >
+                            required>
 
                         <button
                             type="button"
                             id="togglePassword"
-                            class="toggle-password"
-                            aria-label="Show password"
-                        >Show</button>
+                            class="toggle-password">
+                            Show
+                        </button>
                     </div>
                 </div>
 
-                <button
-                    type="submit"
-                    id="loginButton"
-                    class="login-button"
-                >
+                <button type="submit"
+                        id="loginButton"
+                        class="login-button">
                     LOGIN
                 </button>
 
-                <p id="message" role="status" aria-live="polite"></p>
+                <p id="message" role="status"
+                   aria-live="polite"></p>
 
             </form>
 
@@ -384,19 +371,16 @@
         <p>&copy; 2026 Sophie. All rights reserved.</p>
     </footer>
 
-    <!-- FIREBASE + JAVASCRIPT -->
     <script type="module">
         import { initializeApp } from
             "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
         import {
             getAuth,
-            signInWithEmailAndPassword,
-            onAuthStateChanged
+            signInWithEmailAndPassword
         } from
             "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDo8Mx05x298OWpQaDUAjUvYR2Ye-ELcUs",
             authDomain: "dashboard-35801.firebaseapp.com",
@@ -407,11 +391,9 @@
             measurementId: "G-W2W8LZLQ68"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Get HTML elements
         const loginForm = document.getElementById("loginForm");
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
@@ -419,108 +401,70 @@
         const togglePassword = document.getElementById("togglePassword");
         const message = document.getElementById("message");
 
-        let isLoggingIn = false;
-
-        // Display message
         function showMessage(text, color) {
             message.textContent = text;
             message.style.color = color;
         }
 
-        // Show or hide password
         togglePassword.addEventListener("click", () => {
-            const isHidden = passwordInput.type === "password";
+            const hidden = passwordInput.type === "password";
 
-            passwordInput.type = isHidden ? "text" : "password";
-            togglePassword.textContent = isHidden ? "Hide" : "Show";
-
+            passwordInput.type = hidden ? "text" : "password";
+            togglePassword.textContent = hidden ? "Hide" : "Show";
             togglePassword.setAttribute(
                 "aria-label",
-                isHidden ? "Hide password" : "Show password"
+                hidden ? "Hide password" : "Show password"
             );
         });
 
-        // Redirect only after Firebase confirms an existing session.
-        onAuthStateChanged(auth, (user) => {
-            if (user && !isLoggingIn) {
-                window.location.replace("./dashboard.html");
-            }
-        });
-
-        // Login form
         loginForm.addEventListener("submit", async (event) => {
             event.preventDefault();
-
-            if (isLoggingIn) return;
 
             const email = emailInput.value.trim();
             const password = passwordInput.value;
 
-            if (!email || !password) {
-                showMessage(
-                    "Please enter your email and password.",
-                    "red"
-                );
-                return;
-            }
-
-            isLoggingIn = true;
             loginButton.disabled = true;
             loginButton.textContent = "LOGGING IN...";
-
             showMessage("Checking your account...", "#555555");
 
             try {
-                const credential = await signInWithEmailAndPassword(
+                await signInWithEmailAndPassword(
                     auth,
                     email,
                     password
                 );
-
-                console.log("Login successful:", credential.user.uid);
 
                 showMessage(
                     "Login successful! Opening dashboard...",
                     "green"
                 );
 
-                window.location.replace("./dashboard.html");
+                window.location.assign("./dashboard.html");
 
             } catch (error) {
                 console.error("Firebase login error:", error.code);
 
-                if (
-                    error.code === "auth/invalid-credential" ||
-                    error.code === "auth/wrong-password" ||
-                    error.code === "auth/user-not-found"
-                ) {
-                    showMessage(
+                const messages = {
+                    "auth/invalid-credential":
                         "Incorrect email or password.",
-                        "red"
-                    );
-                } else if (error.code === "auth/invalid-email") {
-                    showMessage(
+                    "auth/invalid-email":
                         "Please enter a valid email address.",
-                        "red"
-                    );
-                } else if (error.code === "auth/too-many-requests") {
-                    showMessage(
+                    "auth/user-disabled":
+                        "This account has been disabled.",
+                    "auth/too-many-requests":
                         "Too many attempts. Please wait and try again.",
-                        "red"
-                    );
-                } else if (error.code === "auth/network-request-failed") {
-                    showMessage(
+                    "auth/network-request-failed":
                         "Network error. Check your internet connection.",
-                        "red"
-                    );
-                } else {
-                    showMessage(
-                        "Login failed. Check Firebase settings and try again.",
-                        "red"
-                    );
-                }
+                    "auth/operation-not-allowed":
+                        "Enable Email/Password in Firebase Authentication."
+                };
 
-                isLoggingIn = false;
+                showMessage(
+                    messages[error.code] ||
+                    "Login failed: " + error.code,
+                    "red"
+                );
+
                 loginButton.disabled = false;
                 loginButton.textContent = "LOGIN";
             }
@@ -529,4 +473,3 @@
 
 </body>
 </html>
-```
