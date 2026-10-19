@@ -48,10 +48,6 @@
             text-decoration: none;
         }
 
-        .logo span {
-            color: var(--secondary);
-        }
-
         nav {
             display: flex;
             align-items: center;
@@ -111,7 +107,7 @@
             object-fit: cover;
         }
 
-        .login-box h1 {
+        h1 {
             text-align: center;
             color: var(--primary);
             margin-bottom: 10px;
@@ -169,7 +165,6 @@
             color: var(--primary);
             font-weight: bold;
             cursor: pointer;
-            padding: 5px;
         }
 
         .login-button {
@@ -182,18 +177,73 @@
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
         }
 
         .login-button:hover {
             background: #e0b400;
-            transform: translateY(-2px);
         }
 
-        .login-button:disabled {
+        .login-button:disabled,
+        .google-button:disabled,
+        .forgot-button:disabled {
             opacity: 0.65;
             cursor: not-allowed;
-            transform: none;
+        }
+
+        .forgot-button {
+            display: block;
+            margin: 15px 0 20px auto;
+            border: none;
+            background: transparent;
+            color: var(--primary);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .forgot-button:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .google-button {
+            width: 100%;
+            padding: 13px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .google-button:hover {
+            background: #f5f5f5;
+        }
+
+        .google-letter {
+            color: #4285F4;
+            font-size: 21px;
+            font-weight: bold;
         }
 
         #message {
@@ -276,7 +326,7 @@
                 padding: 28px 22px;
             }
 
-            .login-box h1 {
+            h1 {
                 font-size: 24px;
             }
         }
@@ -285,191 +335,277 @@
 
 <body>
 
-    <header>
-        <a href="./index.html" class="logo">Sophie</a>
+<header>
+    <a href="./index.html" class="logo">Sophie</a>
 
-        <nav>
-            <a href="./index.html">Home</a>
-            <a href="./Abouts.html">About</a>
-            <a href="./service.html">Services</a>
-            <a href="./skills.html">Skills</a>
-            <a href="./education.html">Education</a>
-            <a href="./project.html">Projects</a>
-            <a href="./Blog.html">Blog</a>
-            <a href="./contacts.html">Contact</a>
-            <a href="./Login.html" class="active">Login</a>
-        </nav>
-    </header>
+    <nav>
+       <a href="index.html">Home</a>
+             <a href="about.html">About</a>
+            <a href="service.html">Services</a>
+            <a href="skill.html">Skills</a>
+            <a href="education.html">Education</a>
+            <a href="Project.html">Projects</a>
+            <a href="Blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+            <a href="Login.html">Login</a>
+    </nav>
+</header>
 
-    <main class="login-section">
-        <div class="login-box">
+<main class="login-section">
+    <div class="login-box">
 
-            <div class="login-icon">
-                <img src="./sophie.pic-removebg-preview.png"
-                     alt="Sophie">
+        <div class="login-icon">
+            <img src="./sophie.pic-removebg-preview.png"
+                 alt="Sophie">
+        </div>
+
+        <h1>Welcome Back!</h1>
+        <p class="subtitle">Login to your Sophie account</p>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email"
+                       id="email"
+                       placeholder="Enter your email"
+                       autocomplete="username"
+                       required>
             </div>
 
-            <h1>Welcome Back!</h1>
-            <p class="subtitle">Login to your Sophie account</p>
+            <div class="form-group">
+                <label for="password">Password</label>
 
-            <form id="loginForm">
+                <div class="password-wrapper">
+                    <input type="password"
+                           id="password"
+                           placeholder="Enter your password"
+                           autocomplete="current-password"
+                           required>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        autocomplete="username"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-
-                    <div class="password-wrapper">
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Enter your password"
-                            autocomplete="current-password"
-                            required>
-
-                        <button
-                            type="button"
+                    <button type="button"
                             id="togglePassword"
                             class="toggle-password">
-                            Show
-                        </button>
-                    </div>
+                        Show
+                    </button>
                 </div>
+            </div>
 
-                <button type="submit"
-                        id="loginButton"
-                        class="login-button">
-                    LOGIN
-                </button>
+            <button type="submit"
+                    id="loginButton"
+                    class="login-button">
+                LOGIN
+            </button>
 
-                <p id="message" role="status"
-                   aria-live="polite"></p>
+        </form>
 
-            </form>
+        <button type="button"
+                id="forgotPassword"
+                class="forgot-button">
+            Forgot Password?
+        </button>
 
-            <p class="signup-text">
-                Don't have an account?
-                <a href="./sign up.html">Sign Up</a>
-            </p>
+        <div class="divider">OR</div>
 
-            <a href="./index.html" class="back-home">
-                ← Back to Home
-            </a>
+        <button type="button"
+                id="googleLogin"
+                class="google-button">
+            <span class="google-letter">G</span>
+            Continue with Google
+        </button>
 
-        </div>
-    </main>
+        <p id="message" role="status" aria-live="polite"></p>
 
-    <footer>
-        <p>&copy; 2026 Sophie. All rights reserved.</p>
-    </footer>
+        <p class="signup-text">
+            Don't have an account?
+            <a href="./sign up.html">Sign Up</a>
+        </p>
 
-    <script type="module">
-        import { initializeApp } from
-            "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        <a href="./index.html" class="back-home">
+            ← Back to Home
+        </a>
 
-        import {
-            getAuth,
-            signInWithEmailAndPassword
-        } from
-            "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    </div>
+</main>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDo8Mx05x298OWpQaDUAjUvYR2Ye-ELcUs",
-            authDomain: "dashboard-35801.firebaseapp.com",
-            projectId: "dashboard-35801",
-            storageBucket: "dashboard-35801.firebasestorage.app",
-            messagingSenderId: "605136367808",
-            appId: "1:605136367808:web:fb1f5708c1ad8a3545bd25",
-            measurementId: "G-W2W8LZLQ68"
-        };
+<footer>
+    <p>&copy; 2026 Sophie. All rights reserved.</p>
+</footer>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+<script type="module">
+    import { initializeApp } from
+        "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-        const loginForm = document.getElementById("loginForm");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-        const loginButton = document.getElementById("loginButton");
-        const togglePassword = document.getElementById("togglePassword");
-        const message = document.getElementById("message");
+    import {
+        getAuth,
+        signInWithEmailAndPassword,
+        sendPasswordResetEmail,
+        GoogleAuthProvider,
+        signInWithPopup
+    } from
+        "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-        function showMessage(text, color) {
-            message.textContent = text;
-            message.style.color = color;
+    const firebaseConfig = {
+        apiKey: "AIzaSyDo8Mx05x298OWpQaDUAjUvYR2Ye-ELcUs",
+        authDomain: "dashboard-35801.firebaseapp.com",
+        projectId: "dashboard-35801",
+        storageBucket: "dashboard-35801.firebasestorage.app",
+        messagingSenderId: "605136367808",
+        appId: "1:605136367808:web:fb1f5708c1ad8a3545bd25",
+        measurementId: "G-W2W8LZLQ68"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const togglePassword = document.getElementById("togglePassword");
+    const forgotPassword = document.getElementById("forgotPassword");
+    const googleLogin = document.getElementById("googleLogin");
+    const message = document.getElementById("message");
+
+    function showMessage(text, color) {
+        message.textContent = text;
+        message.style.color = color;
+    }
+
+    togglePassword.addEventListener("click", () => {
+        const hidden = passwordInput.type === "password";
+
+        passwordInput.type = hidden ? "text" : "password";
+        togglePassword.textContent = hidden ? "Hide" : "Show";
+    });
+
+    // EMAIL AND PASSWORD LOGIN
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        loginButton.disabled = true;
+        loginButton.textContent = "LOGGING IN...";
+        showMessage("Checking your account...", "#555555");
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+
+            showMessage("Login successful! Opening dashboard...", "green");
+            window.location.assign("./dashboard.html");
+
+        } catch (error) {
+            console.error("Firebase login error:", error.code);
+
+            const messages = {
+                "auth/invalid-credential": "Incorrect email or password.",
+                "auth/invalid-email": "Please enter a valid email address.",
+                "auth/user-disabled": "This account has been disabled.",
+                "auth/too-many-requests": "Too many attempts. Please try later.",
+                "auth/network-request-failed": "Check your internet connection.",
+                "auth/operation-not-allowed":
+                    "Enable Email/Password in Firebase Authentication."
+            };
+
+            showMessage(
+                messages[error.code] || "Login failed. Please try again.",
+                "red"
+            );
+
+            loginButton.disabled = false;
+            loginButton.textContent = "LOGIN";
+        }
+    });
+
+    // FORGOT PASSWORD
+    forgotPassword.addEventListener("click", async () => {
+        const email = emailInput.value.trim();
+
+        if (!email) {
+            showMessage(
+                "Enter your email address above first.",
+                "red"
+            );
+            emailInput.focus();
+            return;
         }
 
-        togglePassword.addEventListener("click", () => {
-            const hidden = passwordInput.type === "password";
+        forgotPassword.disabled = true;
+        showMessage("Sending password reset email...", "#555555");
 
-            passwordInput.type = hidden ? "text" : "password";
-            togglePassword.textContent = hidden ? "Hide" : "Show";
-            togglePassword.setAttribute(
-                "aria-label",
-                hidden ? "Hide password" : "Show password"
+        try {
+            await sendPasswordResetEmail(auth, email);
+
+            showMessage(
+                "If this email is registered, a password reset email has been sent. Check your inbox and spam folder.",
+                "green"
             );
-        });
 
-        loginForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
+        } catch (error) {
+            console.error("Password reset error:", error.code);
 
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
+            const messages = {
+                "auth/invalid-email": "Please enter a valid email address.",
+                "auth/too-many-requests":
+                    "Too many attempts. Please try again later.",
+                "auth/network-request-failed":
+                    "Check your internet connection."
+            };
 
-            loginButton.disabled = true;
-            loginButton.textContent = "LOGGING IN...";
-            showMessage("Checking your account...", "#555555");
+            showMessage(
+                messages[error.code] ||
+                "Unable to send reset email. Check your Firebase settings.",
+                "red"
+            );
 
-            try {
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
+        } finally {
+            forgotPassword.disabled = false;
+        }
+    });
 
-                showMessage(
-                    "Login successful! Opening dashboard...",
-                    "green"
-                );
+    // GOOGLE LOGIN
+    googleLogin.addEventListener("click", async () => {
+        googleLogin.disabled = true;
+        googleLogin.textContent = "Connecting to Google...";
 
-                window.location.assign("./dashboard.html");
+        try {
+            await signInWithPopup(auth, googleProvider);
 
-            } catch (error) {
-                console.error("Firebase login error:", error.code);
+            showMessage("Google login successful!", "green");
+            window.location.assign("./dashboard.html");
 
-                const messages = {
-                    "auth/invalid-credential":
-                        "Incorrect email or password.",
-                    "auth/invalid-email":
-                        "Please enter a valid email address.",
-                    "auth/user-disabled":
-                        "This account has been disabled.",
-                    "auth/too-many-requests":
-                        "Too many attempts. Please wait and try again.",
-                    "auth/network-request-failed":
-                        "Network error. Check your internet connection.",
-                    "auth/operation-not-allowed":
-                        "Enable Email/Password in Firebase Authentication."
-                };
+        } catch (error) {
+            console.error("Google login error:", error.code);
 
-                showMessage(
-                    messages[error.code] ||
-                    "Login failed: " + error.code,
-                    "red"
-                );
+            const messages = {
+                "auth/popup-closed-by-user":
+                    "Google login was cancelled. Please try again.",
+                "auth/popup-blocked":
+                    "Allow popups in your browser and try again.",
+                "auth/unauthorized-domain":
+                    "Add your website domain to Firebase Authorized domains.",
+                "auth/operation-not-allowed":
+                    "Enable Google sign-in in Firebase Authentication.",
+                "auth/network-request-failed":
+                    "Check your internet connection."
+            };
 
-                loginButton.disabled = false;
-                loginButton.textContent = "LOGIN";
-            }
-        });
-    </script>
+            showMessage(
+                messages[error.code] ||
+                "Google login failed. Please try again.",
+                "red"
+            );
+
+        } finally {
+            googleLogin.disabled = false;
+            googleLogin.innerHTML =
+                '<span class="google-letter">G</span> Continue with Google';
+        }
+    });
+</script>
 
 </body>
 </html>

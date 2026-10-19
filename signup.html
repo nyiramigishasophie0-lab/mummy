@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophie | Sign Up</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #22174c;
+            padding: 20px;
+        }
+
+        .signup-box {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #22174c;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        label {
+            display: block;
+            margin: 14px 0 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #f5c400;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a {
+            color: #22174c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-box">
+        <h1>Create Account</h1>
+        <p>Sign up for your Sophie account</p>
+
+        <form id="signupForm">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required autocomplete="email">
+
+            <label for="password">Password</label>
+            <input type="password" id="password"
+                   required minlength="6" autocomplete="new-password">
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword"
+                   required minlength="6" autocomplete="new-password">
+
+            <button type="submit" id="signupButton">SIGN UP</button>
+            <div id="message" role="status"></div>
+        </form>
+
+        <div class="links">
+            Already have an account?
+            <a href="./Login.html">Login</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp }
+            from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+        import {
+            getAuth,
+            createUserWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDo8Mx05x298OWpQaDUAjUvYR2Ye-ELcUs",
+            authDomain: "dashboard-35801.firebaseapp.com",
+            projectId: "dashboard-35801",
+            storageBucket: "dashboard-35801.firebasestorage.app",
+            messagingSenderId: "605136367808",
+            appId: "1:605136367808:web:fb1f5708c1ad8a3545bd25",
+            measurementId: "G-W2W8LZLQ68"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const form = document.getElementById("signupForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const confirmInput = document.getElementById("confirmPassword");
+        const button = document.getElementById("signupButton");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmInput.value;
+
+            if (password !== confirmPassword) {
+                message.style.color = "red";
+                message.textContent = "Passwords do not match.";
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = "CREATING ACCOUNT...";
+
+            try {
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+                message.style.color = "green";
+                message.textContent =
+                    "Account created successfully! Go to Login.";
+
+                form.reset();
+
+            } catch (error) {
+                const messages = {
+                    "auth/email-already-in-use":
+                        "This email already has an account.",
+                    "auth/invalid-email":
+                        "Enter a valid email address.",
+                    "auth/weak-password":
+                        "Use a stronger password with at least 6 characters.",
+                    "auth/operation-not-allowed":
+                        "Enable Email/Password in Firebase Authentication.",
+                    "auth/network-request-failed":
+                        "Check your internet connection."
+                };
+
+                message.style.color = "red";
+                message.textContent =
+                    messages[error.code] ||
+                    "Sign up failed: " + error.code;
+
+            } finally {
+                button.disabled = false;
+                button.textContent = "SIGN UP";
+            }
+        });
+    </script>
+
+</body>
+</html>

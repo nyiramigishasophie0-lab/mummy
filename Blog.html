@@ -1,273 +1,312 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Projects - Sophie</title>
+
 <style>
-    
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        :root {
-            --primary: #22174C;
-            --secondary: #f5c518;
-            --white: #ffffff;
-            --text: #333333;
-            --muted: #777777;
-            --border: #dddddd;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background: #22174C;
+    color: #333;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+/* HEADER */
+header {
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
-        /* HEADER */
-        header {
-            width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            background: var(--primary);
-        }
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
 
-        .logo {
-            color: var(--white);
-            font-size: 30px;
-            font-weight: bold;
-            text-decoration: none;
-        }
+.logo span {
+    color: #f5c518;
+}
 
-        .logo span {
-            color: var(--secondary);
-        }
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
 
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
 
-        nav a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
+nav a:hover,
+nav a.active {
+    background: #f5c518;
+    color: #22174C;
+}
 
-        nav a:hover,
-        nav a.active {
-            background: var(--secondary);
-            color: var(--primary);
-        }
-
+/* PROJECTS SECTION */
 .blog {
-    background-color: #22174c;
-    padding: 80px 60px;
+    padding: 60px 5%;
     text-align: center;
 }
 
-.blog h2 {
+.blog h1 {
     color: white;
-    font-size: 35px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    margin-bottom: 15px;
 }
 
-.blog h2 span {
-    color: yellow;
+.blog h1 span {
+    color: #f5c518;
 }
 
-.blog-intro {
+.intro {
     color: white;
-    font-size: 16px;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
+    line-height: 1.7;
 }
 
 .blog-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 35px;
+    align-items: stretch;
     flex-wrap: wrap;
+    gap: 30px;
 }
 
 .blog-item {
     width: 350px;
-    text-align: center;
-}
-
-.blog-card {
-    width: 350px;
-    height: 390px;
-    background-color: white;
+    max-width: 100%;
+    background: white;
     border-radius: 10px;
     overflow: hidden;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
 }
 
-.blog-image {
-    width: 100%;
-    height: 200px;
+.blog-item:hover {
+    transform: translateY(-5px);
 }
 
-.blog-image img {
+.blog-item img {
     width: 100%;
-    height: 100%;
+    height: 210px;
     object-fit: cover;
 }
 
 .blog-content {
-    padding: 25px;
+    padding: 22px;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
-.blog-content h3 {
-    color: #22174c;
-    font-size: 23px;
-    margin: 0 0 15px;
+.blog-content h2 {
+    color: #22174C;
+    margin-bottom: 12px;
 }
 
 .blog-content p {
+    line-height: 1.7;
     color: #555;
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0;
+    flex: 1;
 }
 
 .blog-btn {
     display: inline-block;
+    align-self: flex-start;
     margin-top: 20px;
-    padding: 11px 25px;
-    background-color: yellow;
-    color: #22174c;
-    text-decoration: none;
+    padding: 22px 22px;
+    border: none;
     border-radius: 5px;
+    background: #f5c518;
+    color: #22174C;
     font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
 .blog-btn:hover {
-    background-color: white;
+    background: #22174C;
+    color: white;
 }
 
+/* FOOTER */
+footer {
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
 
+/* MOBILE */
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .blog {
+        padding: 40px 5%;
+    }
+
+    .blog h1 {
+        font-size: 30px;
+    }
+}
 </style>
-<body>
-      <header>
-
-        <div class="logo">Sophie</div>
-
-        <nav>
-            <a href="./index.html">Home</a>
-            <a href="./Abouts.html">About</a>
-            <a href="./service.html">Services</a>
-            <a href="./skills.html">Skills</a>
-            <a href="./education.html">Education</a>
-            <a href="./project.html">Projects</a>
-            <a href="./Blog.html">Blog</a>
-            <a href="./contacts.html">Contact</a>
-            <a href="./Login.html">Login</a>
-            
-        </nav>
-
-    </header>
 </head>
 
-<section class="blog" id="blog">
+<body>
 
-    <h2><span>My</span> Blog</h2>
+<!-- HEADER -->
+<header>
+    <a href="index.html" class="logo">Sophie<span>.</span></a>
 
-    <p class="blog-intro">
-        Welcome to my blog where I share my learning journey, technology,
-        and experiences.
+    <nav>
+        <a href="index.html">Home</a>
+             <a href="about.html">About</a>
+            <a href="service.html">Services</a>
+            <a href="skill.html">Skills</a>
+            <a href="education.html">Education</a>
+            <a href="Project.html">Projects</a>
+            <a href="Blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+            <a href="Login.html">Login</a>
+    </nav>
+</header>
+
+<!-- MY PROJECTS -->
+<section class="blog" id="blogList">
+
+    <h1>My <span>Blogs</span></h1>
+
+    <p class="intro">
+        Welcome to my projects! Explore the websites and applications
+        I have created using my coding skills. Click Read More to
+        open and try each project.
     </p>
 
     <div class="blog-container">
+
+        <!-- PROJECT 1: CALCULATOR -->
         <div class="blog-item">
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="./pexels-zayed-hossain-52728970-36706459.jpg" alt="My Coding Journey">
-                </div>
 
-                <div class="blog-content">
-                    <h3>My Coding Journey</h3>
-                    <p>
-                       My coding journey started with a simple
-                        interest in technology and a desire to 
-                        learn how websites and software are created.
-                         At first, coding was not easy for me, but I continued
-                        practicing and learning step by step.
-                    </p>
-                </div>
+            <img
+                src="blog1.jpg"
+                alt="Calculator App"
+            >
+
+            <div class="blog-content">
+                <h2>My Journey in Coding</h2>
+
+                <p>
+                   My name is Sophie Nyiramigisha, and
+                    I am a student of Coding and Software Development. 
+                    I have a strong interest in technology, creativity, and problem-solving. 
+                    My journey in coding is helping me develop new 
+                   skills and discover the many opportunities available in the world of technology.
+                </p>
+
+                <a
+                    href="https://codingjouney.blogspot.com/2026/05/my-journey-in-learning-coding.html"
+                    class="blog-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Read More
+                </a>
             </div>
-
-        
         </div>
 
-
-        <!-- Blog 2 -->
+        <!-- PROJECT 2: RESTAURANT WEBSITE -->
         <div class="blog-item">
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="./pexels-dkomov-34803971.jpg" alt="Technology">
-                </div>
 
-                <div class="blog-content">
-                    <h3>Technology</h3>
-                    <p>
-                        Technology helps people solve problems,
-                         communicate, learn, and make work easier. 
-                         In web development, technology allows us to create
-                          modern websites and applications using tools
-                           such as HTML, CSS, JavaScript, GitHub
-                           and other programming technologies.
+            <img
+                src="blog2.jpg"
+                alt="Restaurant Website"
+            >
 
-                    </p>
-                </div>
+            <div class="blog-content">
+                <h2>Software Developer</h2>
+
+                <p>
+                    Everyone has dreams and goals that motivate them to work hard and improve their
+                     lives. For me, one of my biggest dreams is to become
+                      a professional software developer.
+                </p>
+
+                <a
+                    href="https://codingjouney.blogspot.com/2026/10/my-goals-and-dreams-as-future-software.html"
+                    class="blog-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Read More
+                </a>
             </div>
-
-            
         </div>
 
-
-        <!-- Blog 3 -->
+        <!-- PROJECT 3: STUDENT RESULTS -->
         <div class="blog-item">
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="./pexels-peaky-29445974.jpg" alt="Web Development">
-                </div>
 
-                <div class="blog-content">
-                    <h3>Web Development</h3>
-                    <p>A Web Developer is a person who create
-                         and maintains websites and web applications.
-                          They use technologies like HTML, CSS, and
-                           JavaScript to build websites that are attractive,
-                            responsive, and easy to use.
+            <img
+                src="blog 3.jpg"
+                alt="Student Results"
+            >
 
-                    </p>
-                </div>
+            <div class="blog-content">
+                <h2>Technology</h2>
+
+                <p>
+Technology has become an important part of modern education.
+ It has changed the way students learn, teachers teach, 
+ and people share knowledge. Today, students can use computers, smartphones, and the internet
+ to access educational resources and develop new skills.
+                </p>
+
+                <a
+                    href="https://codingjouney.blogspot.com/2026/10/the-importance-of-technology-in.html"
+                    class="blog-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Read More
+                </a>
             </div>
-
-            
         </div>
 
     </div>
-
 </section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Sophie. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
